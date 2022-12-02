@@ -7,13 +7,18 @@ let fullPath =
 
 
 
-let data = File.ReadAllText(fullPath).Split("\n\n")
-            |> List.ofArray
-            |> List.map (fun s -> s.Split "\n" |> List.ofArray)
-            |> List.map (fun sl -> sl  |> List.map int |> List.sum)
-            |> List.sortDescending
-            |> List.head
+let caloriesOrdered =
+    File.ReadAllText(fullPath).Split("\n\n")
+    |> List.ofArray
+    |> List.map (fun s -> s.Split "\n" |> List.ofArray)
+    |> List.map (fun sl -> sl |> List.map int |> List.sum)
+    |> List.sortDescending
 
 
+let topElf = caloriesOrdered |> List.head
+printfn "Top elf calories %d" topElf
 
-printf "%d" data
+let topThreeElves =
+    caloriesOrdered |> List.take 3 |> List.sum
+
+printfn "Top 3 elves calories %d" topThreeElves
