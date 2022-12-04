@@ -17,13 +17,20 @@ let ChoiceScoreMap =
 // Rock -> A/X
 // Paper -> B/Y
 // Scissors -> C/Z
-    // win 6
-    // tie 3
-    // loss 0
+// win 6
+// tie 3
+// loss 0
+
+
+// x means lose
+// y means draw
+// z means win
+
 let determineScore (play: string) : int =
     let myPlay = play[2]
     let theirPlay = play[0]
     let choiceScore = ChoiceScoreMap[myPlay]
+
     let handScore =
         match myPlay, theirPlay with
         | 'X', 'C' -> 6 // rock beats scissors
@@ -40,9 +47,41 @@ let determineScore (play: string) : int =
     choiceScore + handScore
 
 
+let answer =
+    input |> Array.map determineScore
 
-let answer =  input |> Array.map determineScore
+
+printfn $"Answer 1: {(answer |> Array.sum)}"
+
+let getLosingChoice play =
+    match play with
+    | 'A' -> 'Z'
+    | 'B' -> 'X'
+    | 'C' -> 'Y'
+
+let getDrawChoice play =
+    match play with
+    | 'A' -> 'X'
+    | 'B' -> 'Y'
+    | 'C' -> 'Z'
+
+let getWinningChoice play =
+    match play with
+    | 'A' -> 'Y'
+    | 'B' -> 'Z'
+    | 'C' -> 'X'
+
+let determineScore2 (play: string) : int =
+    let theirPlay = play[0]
+    let myStrategy = play[2]
+
+    match myStrategy with
+    | 'X' -> ChoiceScoreMap[getLosingChoice theirPlay] + 0
+    | 'Y' -> ChoiceScoreMap[getDrawChoice theirPlay] + 3
+    | 'Z' -> ChoiceScoreMap[getWinningChoice theirPlay] + 6
 
 
+let answer2 =
+    input |> Array.map determineScore2
 
-printfn "%d" (answer |> Array.sum)
+printfn $"Answer 2: {(answer2 |> Array.sum)}"
