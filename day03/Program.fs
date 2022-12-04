@@ -19,4 +19,19 @@ let q =
         | false -> (int ch) - 96)
     |> List.sum
 
-printf $"Answer {q}"
+printfn $"Answer {q}"
+
+let badgePriority =
+    input
+    |> List.ofArray
+    |> List.chunkBySize 3
+    |> List.map (fun groupStringList -> groupStringList |> List.map Set.ofSeq)
+    |> List.map (fun groupSetList -> groupSetList |> Set.intersectMany)
+    |> List.map (fun a -> a.MinimumElement)
+     |> List.map (fun ch ->
+        match Char.IsUpper ch with
+        | true -> (int ch) - 64 + 26
+        | false -> (int ch) - 96)
+    |> List.sum
+    
+printfn $"Answer2 {badgePriority}"
