@@ -6,8 +6,8 @@ let fullPath =
 
 let caloriesOrdered =
     File.ReadAllText(fullPath).Split("\n\n")
-    |> Array.map (fun s -> s.Split "\n")
-    |> Array.map (fun sl -> sl |> Array.map int |> Array.sum)
+    |> Array.map (fun (s: string) -> s.Split "\n")
+    |> Array.map (fun (sl: string []) -> sl |> Array.map int |> Array.sum)
     |> Array.sortDescending
 
 
