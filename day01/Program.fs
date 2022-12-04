@@ -4,21 +4,17 @@ open System.IO
 let fullPath =
     Path.Combine(__SOURCE_DIRECTORY__, "input.txt")
 
-
-
-
 let caloriesOrdered =
     File.ReadAllText(fullPath).Split("\n\n")
-    |> List.ofArray
-    |> List.map (fun s -> s.Split "\n" |> List.ofArray)
-    |> List.map (fun sl -> sl |> List.map int |> List.sum)
-    |> List.sortDescending
+    |> Array.map (fun s -> s.Split "\n")
+    |> Array.map (fun sl -> sl |> Array.map int |> Array.sum)
+    |> Array.sortDescending
 
 
-let topElf = caloriesOrdered |> List.head
+let topElf = caloriesOrdered |> Array.head
 printfn "Top elf calories %d" topElf
 
 let topThreeElves =
-    caloriesOrdered |> List.take 3 |> List.sum
+    caloriesOrdered |> Array.take 3 |> Array.sum
 
 printfn "Top 3 elves calories %d" topThreeElves
